@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  vars:
+    - faup_virtualenv_path: /root/env
+  roles:
+    - juju4.faup
+
