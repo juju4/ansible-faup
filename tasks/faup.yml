@@ -7,9 +7,7 @@
 
 - name: faup dependencies
   package: name={{item}} state=present
-  with_items:
-    - cmake
-    - make
+  with_items: "{{ faup_deps }}"
 
 - name: faup | compile
   command: "{{ item }} chdir={{ toolsetdir }}/faup/build creates={{ toolsetdir }}/faup/build/src/tools/faup"
