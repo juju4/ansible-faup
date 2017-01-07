@@ -2,8 +2,11 @@
 
 toolsetdir: /opt/tools
 
-## if undefined, global install, else in corresponding virtualenv
+## if undefined/empty, global install, else in corresponding virtualenv
 #faup_virtualenv_path: /path/to/env
 #faup_virtualenv_user: user
 #faup_virtualenv_home: /path/home
+faup_virtualenv_path: ''
+faup_virtualenv_user: ''
+faup_virtualenv_home: ''
 
