@@ -57,6 +57,8 @@
       with_items:
         - { c: "virtualenv {{ faup_virtualenv_path }}", t: "{{ faup_virtualenv_path }}" }
         - { c: "{{ faup_virtualenv_path }}/bin/pip install file://{{ toolsetdir }}/faup/src/lib/bindings/python/", t: "{{ faup_python_bindings | regex_replace('/usr', faup_virtualenv_path) }}" }
+      become: yes
+      become_user: "{{ faup_virtualenv_user }}"
       when: ansible_os_family == "RedHat" or ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 ## FIXME! not idempotent
 #    - name: ensure right permissions

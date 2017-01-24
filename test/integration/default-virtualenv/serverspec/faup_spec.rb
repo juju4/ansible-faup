@@ -24,7 +24,7 @@ describe command('/usr/local/bin/faup -f tld slashdot.org') do
   its(:exit_status) { should eq 0 }
 end
 
-describe file('/root/env/lib/python2.7/site-packages/pyfaup-1.0-py2.7.egg-info') do
+describe file('/home/test/env/lib/python2.7/site-packages/pyfaup-1.0-py2.7.egg-info') do
   it { should be_readable }
 end
 
