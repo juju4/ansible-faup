@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/juju4/ansible-faup.svg?branch=master)](https://travis-ci.org/juju4/ansible-faup)
+[![Build Status - Master](https://travis-ci.org/juju4/ansible-faup.svg?branch=master)](https://travis-ci.org/juju4/ansible-faup)
+[![Build Status - Devel](https://travis-ci.org/juju4/ansible-faup.svg?branch=devel)](https://travis-ci.org/juju4/ansible-faup/branches)
 # FAUP ansible role
 
 Ansible role to setup Faup, Fast URL decoder library
@@ -12,6 +13,7 @@ Installation from source
 It was tested on the following versions:
  * 1.9
  * 2.0
+ * 2.2
 
 ### Operating systems
 
