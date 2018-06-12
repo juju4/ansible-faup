@@ -8,3 +8,6 @@ faup_deps:
 
 faup_python_bindings: /usr/lib/python2.7/site-packages/pyfaup-1.0-py2.7.egg
 
+faup_python_pkgs:
+  - python-virtualenv
+  - python-pip

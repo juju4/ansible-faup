@@ -16,6 +16,7 @@ end
 describe command('/usr/local/bin/faup -v') do
   its(:stdout) { should match /faup v/ }
   its(:stdout) { should match /TLD file being used:/ }
+  its(:stderr) { should_not match /error while loading shared libraries/ }
   its(:exit_status) { should eq 0 }
 end
 

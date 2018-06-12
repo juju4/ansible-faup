@@ -10,3 +10,5 @@ faup_virtualenv_path: ''
 faup_virtualenv_user: ''
 faup_virtualenv_home: ''
 
+#faup_python_version: 2
+faup_python_version: 3
