@@ -8,7 +8,6 @@ faup_deps:
     - python3-dev
     - python3-setuptools
 
-faup_python_bindings: /usr/local/lib/python2.7/dist-packages/pyfaup-1.0-py2.7.egg
 faup_python_bin: "{% if faup_python_version == 2 %}python2{% else %}python3{% endif %}"
 faup_python_bindings: "{% if faup_python_version == 2 %}/usr/lib/python2.7/site-packages/pyfaup-1.0-py2.7.egg{% else %}/usr/local/lib/python3.5/dist-packages/pyfaup-1.0-py3.5.egg{% endif %}"
 
