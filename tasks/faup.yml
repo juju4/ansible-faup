@@ -4,6 +4,7 @@
   git:
     repo: https://github.com/stricaud/faup.git
     dest: "{{ toolsetdir }}/faup"
+    version: HEAD
 
 - name: faup dependencies
   package: name={{ item }} state=present
@@ -44,7 +45,7 @@
       args:
         chdir: "{{ toolsetdir }}/faup/src/lib/bindings/python"
         creates: "{{ faup_python_bindings }}"
-  when: faup_virtualenv_path is not defined or faup_virtualenv_path == ''
+  when: faup_virtualenv_path is not defined or not faup_virtualenv_path
 
 - block:
     - name: virtualenv dependencies
@@ -83,4 +84,4 @@
 #      with_items:
 #        - "{{ faup_virtualenv_path }}/bin/python setup.py build"
 #        - "{{ faup_virtualenv_path }}/bin/python setup.py install"
-  when: faup_virtualenv_path is defined and faup_virtualenv_path != ''
+  when: faup_virtualenv_path is defined and faup_virtualenv_path
