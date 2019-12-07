@@ -51,8 +51,18 @@
     - name: virtualenv dependencies
       package: name={{ item }} state=present
       with_items: "{{ faup_python_pkgs }}"
+    # if user exists with running process, usermod can't edit it and fails
+    - name: check if virtualenv user {{ faup_virtualenv_user }} exists
+      command: "grep {{ faup_virtualenv_user }} /etc/passwd"
+      changed_when: false
+      ignore_errors: true
+      register: haveuser
     - name: ensure virtualenv user {{ faup_virtualenv_user }} exists
-      user: "name={{ faup_virtualenv_user }} home={{ faup_virtualenv_home }} state=present"
+      user:
+        name: "{{ faup_virtualenv_user }}"
+        home: "{{ faup_virtualenv_home }}"
+        state: present
+      when: haveuser is failed
 #    - name: debian | install faup python bindings - virtualenv
 #      pip:
 #        name: "file://{{ toolsetdir }}/faup/src/lib/bindings/python"
