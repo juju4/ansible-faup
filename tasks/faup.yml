@@ -72,7 +72,13 @@
 #      become_user: "{{ faup_virtualenv_user }}"
 #      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 ## centos7: previous command fails silently
-    - name: redhat | install faup python bindings - virtualenv
+    - name: ensure virtualenv dirname path exists
+      file:
+        dest: "{{ faup_virtualenv_path | dirname }}"
+        state: directory
+        mode: '0755'
+        owner: "{{ faup_virtualenv_user }}"
+    - name: install faup python bindings - virtualenv
       command: "{{ item.c }}"
       args:
          creates: "{{ item.t }}"
