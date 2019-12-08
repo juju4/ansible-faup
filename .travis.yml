@@ -72,6 +72,10 @@ script:
 ## travis/docker: Errno::EROFS: Read-only file system @ dir_s_mkdir - /etc/ansible/roles/ansible-MISP/test/integration/default/serverspec/.bundle
 #  - 'sudo docker exec --tty "$(cat ${container_id})" /etc/ansible/roles/MISP/test/integration/default/serverspec/run-local-tests.sh'
 
+after_failure:
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm find /usr/lib/python*/site-packages/ -iname "*faup*"'
+
+after_script:
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
 
