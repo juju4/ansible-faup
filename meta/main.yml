@@ -20,4 +20,5 @@ galaxy_info:
   - system
   - network
   - security
-dependencies: []
+dependencies:
+  - juju4.redhat_epel
