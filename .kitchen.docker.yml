@@ -38,3 +38,8 @@ suites:
   - name: default
     run_list:
     attributes:
+  - name: default-virtualenv
+    run_list:
+    provisioner:
+      name: ansible_playbook
+      playbook: test/integration/default-virtualenv/default.yml
