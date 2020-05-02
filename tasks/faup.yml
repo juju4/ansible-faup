@@ -78,6 +78,13 @@
         state: directory
         mode: '0755'
         owner: "{{ faup_virtualenv_user }}"
+    - name: ensure directories ownership if needed, like pip cache
+      file:
+        dest: "{{ item.d }}"
+        state: "{{ item.s }}"
+        mode: "{{ item.m }}"
+        owner: "{{ item.o }}"
+      with_items: "{{ faup_ownership | default([]) }}"
     - name: install faup python bindings - virtualenv
       command: "{{ item.c }}"
       args:
