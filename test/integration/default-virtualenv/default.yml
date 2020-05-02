@@ -9,5 +9,7 @@
     - faup_virtualenv_user: test
     - faup_virtualenv_home: /home/test
     - faup_virtualenv_path: /home/test/env
+    - faup_ownership:
+        - { d: "{{ faup_virtualenv_home }}/.cache/pip", s: directory, m: '0755', o: "{{ faup_virtualenv_user }}" }
   roles:
     - juju4.faup
