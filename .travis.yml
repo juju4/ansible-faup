@@ -80,7 +80,7 @@ script:
 
 after_failure:
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm find /usr/lib/python2.7 /usr/local/lib/python2.7 -iname "*faup*"'
-  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm find /usr/lib/python3.6 /usr/local/lib/python3.6  -iname "*faup*"'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm find /usr/lib/python3* /usr/local/lib/python3*  -iname "*faup*"'
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm find /home/test/env  -iname "*faup*"'
 
 after_script:
