@@ -1,0 +1,18 @@
+---
+
+faup_deps:
+    - cmake
+    - make
+    - gcc
+    - g++
+    - python3-dev
+    - python3-setuptools
+
+faup_python_bin: "{% if faup_python_version == 2 %}python2{% else %}python3{% endif %}"
+faup_python_bindings: "{% if faup_python_version == 2 %}/usr/local/lib/python2.7/dist-packages/pyfaup-1.0-py2.7.egg{% elif faup_virtualenv_path %}{{ faup_virtualenv_path }}/lib/python3.6/site-packages/pyfaup-1.0.dist-info{% else %}/usr/local/lib/python3.6/dist-packages/pyfaup-1.0-py3.6.egg{% endif %}"
+
+faup_python_pkgs:
+  - python3-virtualenv
+  - python3-pip
+  - python3-dev
+  - python3-dev
