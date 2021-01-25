@@ -1,5 +1,10 @@
 ---
 
+- name: Ensure git is present
+  package:
+    name: git
+    state: present
+
 - name: git clone faup
   git:
     repo: https://github.com/stricaud/faup.git
