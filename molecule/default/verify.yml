@@ -16,7 +16,7 @@
       register: run
     - name: Validate execution
       assert:
-        that: "'faup v' in run.stdout and 
+        that: "'faup v' in run.stdout and
                'TLD file being used:' in run.stdout and
                'error while loading shared libraries' not in run.stderr"
     - name: Ensure faup binary is working (2)
@@ -25,4 +25,4 @@
       register: run2
     - name: Validate execution
       assert:
-        that: "'org' in run2.stdout" and run2.rc == 0"
+        that: "'org' in run2.stdout and run2.rc == 0"

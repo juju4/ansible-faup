@@ -1,10 +1,10 @@
 ---
 
 faup_deps:
-    - cmake
-    - make
-    - gcc
-    - gcc-c++
+  - cmake
+  - make
+  - gcc
+  - gcc-c++
 
 faup_python_bindings: /usr/lib/python2.7/site-packages/pyfaup-1.0-py2.7.egg
 

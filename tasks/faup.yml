@@ -4,7 +4,7 @@
   git:
     repo: https://github.com/stricaud/faup.git
     dest: "{{ toolsetdir }}/faup"
-    version: HEAD
+    version: "{{ faup_version | default('685acb0d4c936f97782497a684764671728eda78') }}"
 
 - name: faup dependencies
   package: name={{ item }} state=present
@@ -19,12 +19,20 @@
     - cmake ..
     - make
 - name: Ubuntu | ensure appropriate path for shared libraries
-  lineinfile: dest=/etc/ld.so.conf.d/x86_64-linux-gnu.conf line='/usr/local/lib/x86_64-linux-gnu' create=yes
+  lineinfile:
+    dest: /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+    line: '/usr/local/lib/x86_64-linux-gnu'
+    mode: '0644'
+    create: yes
   when: ansible_distribution == 'Ubuntu'
   notify:
     - run ldconfig
 - name: RedHat | ensure appropriate path for shared libraries
-  lineinfile: dest=/etc/ld.so.conf.d/x86_64-linux-gnu.conf line='/usr/local/lib64' create=yes
+  lineinfile:
+    dest: /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+    line: '/usr/local/lib64'
+    mode: '0644'
+    create: yes
   when: ansible_os_family == "RedHat"
   notify:
     - run ldconfig
@@ -63,15 +71,15 @@
         home: "{{ faup_virtualenv_home }}"
         state: present
       when: haveuser is failed
-#    - name: debian | install faup python bindings - virtualenv
-#      pip:
-#        name: "file://{{ toolsetdir }}/faup/src/lib/bindings/python"
-#        virtualenv: "{{ faup_virtualenv_path }}"
-### FIXME! end with owner root
-#      become: yes
-#      become_user: "{{ faup_virtualenv_user }}"
-#      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-## centos7: previous command fails silently
+    # - name: debian | install faup python bindings - virtualenv
+    #   pip:
+    #     name: "file://{{ toolsetdir }}/faup/src/lib/bindings/python"
+    #     virtualenv: "{{ faup_virtualenv_path }}"
+    ### FIXME! end with owner root
+    #   become: yes
+    #   become_user: "{{ faup_virtualenv_user }}"
+    #   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    ## centos7: previous command fails silently
     - name: ensure virtualenv dirname path exists
       file:
         dest: "{{ faup_virtualenv_path | dirname }}"
@@ -88,23 +96,23 @@
     - name: install faup python bindings - virtualenv
       command: "{{ item.c }}"
       args:
-         creates: "{{ item.t }}"
+        creates: "{{ item.t }}"
       with_items:
         - { c: "virtualenv -p {{ faup_python_bin }} {{ faup_virtualenv_path }}", t: "{{ faup_virtualenv_path }}" }
         - { c: "{{ faup_virtualenv_path }}/bin/pip install file://{{ toolsetdir }}/faup/src/lib/bindings/python/",
             t: "{{ faup_python_bindings | regex_replace('/usr', faup_virtualenv_path) }}"
-          }
+        }
       become: yes
       become_user: "{{ faup_virtualenv_user }}"
-#      when: ansible_os_family == "RedHat"
-## FIXME! not idempotent
-#    - name: ensure right permissions
-#      file: "dest={{ faup_virtualenv_path }} state=directory owner={{ faup_virtualenv_user }} recurse=yes"
-#      command: "{{ item }}"
-#      args:
-#        chdir: "{{ toolsetdir }}/faup/src/lib/bindings/python"
-#        creates: "{{ faup_virtualenv_path }}/lib/python2.7/site-packages/pyfaup-1.0-py2.7.egg"
-#      with_items:
-#        - "{{ faup_virtualenv_path }}/bin/python setup.py build"
-#        - "{{ faup_virtualenv_path }}/bin/python setup.py install"
+      # when: ansible_os_family == "RedHat"
+      ## FIXME! not idempotent
+      # - name: ensure right permissions
+      #   file: "dest={{ faup_virtualenv_path }} state=directory owner={{ faup_virtualenv_user }} recurse=yes"
+      #   command: "{{ item }}"
+      #   args:
+      #     chdir: "{{ toolsetdir }}/faup/src/lib/bindings/python"
+      #     creates: "{{ faup_virtualenv_path }}/lib/python2.7/site-packages/pyfaup-1.0-py2.7.egg"
+      #   with_items:
+      #     - "{{ faup_virtualenv_path }}/bin/python setup.py build"
+      #     - "{{ faup_virtualenv_path }}/bin/python setup.py install"
   when: faup_virtualenv_path is defined and faup_virtualenv_path
