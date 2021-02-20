@@ -75,7 +75,7 @@
         name: "{{ faup_virtualenv_user }}"
         home: "{{ faup_virtualenv_home }}"
         state: present
-      when: haveuser is failed
+      when: haveuser is failed and faup_virtualenv_user != 'root' and faup_virtualenv_user != 'nobody' and faup_virtualenv_user != 'www-data'
     # - name: debian | install faup python bindings - virtualenv
     #   pip:
     #     name: "file://{{ toolsetdir }}/faup/src/lib/bindings/python"
