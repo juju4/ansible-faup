@@ -91,7 +91,7 @@
         state: directory
         mode: '0755'
         owner: "{{ faup_virtualenv_user }}"
-      when: faup_virtualenv_path | dirname != '/home'
+      when: faup_virtualenv_path | dirname | dirname != '/home'
     - name: ensure directories ownership if needed, like pip cache
       file:
         dest: "{{ item.d }}"
