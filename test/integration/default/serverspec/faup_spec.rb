@@ -24,4 +24,3 @@ describe command('/usr/local/bin/faup -f tld slashdot.org') do
   its(:stdout) { should match /org/ }
   its(:exit_status) { should eq 0 }
 end
-
