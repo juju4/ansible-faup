@@ -68,8 +68,11 @@
 
 - block:
     - name: virtualenv dependencies
-      package: name={{ item }} state=present
-      with_items: "{{ faup_python_pkgs }}"
+      package:
+        name: "{{ faup_python_pkgs }}"
+        state: present
+      register: pkg_install
+      until: pkg_install is success
     # if user exists with running process, usermod can't edit it and fails
     - name: check if virtualenv user {{ faup_virtualenv_user }} exists
       command: "grep {{ faup_virtualenv_user }} /etc/passwd"
