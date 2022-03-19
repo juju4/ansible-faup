@@ -4,26 +4,26 @@
   hosts: faup
   tasks:
     - name: Ensure faup executable is present
-      stat:
+      ansible.builtin.stat:
         path: /usr/local/bin/faup
       register: bin
     - name: Validate faup binary stats
-      assert:
+      ansible.builtin.assert:
         that: bin.stat.exists and bin.stat.size != 0 and bin.stat.mode == '0755'
     - name: Ensure faup binary is working
-      command: /usr/local/bin/faup -v
+      ansible.builtin.command: /usr/local/bin/faup -v
       changed_when: false
       register: run
     - name: Validate execution
-      assert:
+      ansible.builtin.assert:
         that: "'faup v' in run.stdout and
                'TLD file being used:' in run.stdout and
                'error while loading shared libraries' not in run.stderr"
     - name: Ensure faup binary is working (2)
-      command: /usr/local/bin/faup -f tld slashdot.org
+      ansible.builtin.command: /usr/local/bin/faup -f tld slashdot.org
       changed_when: false
       register: run2
     - name: Validate execution
-      assert:
+      ansible.builtin.assert:
         # that: "'org' in run2.stdout and run2.rc == 0"
         that: "run2.rc == 0"
