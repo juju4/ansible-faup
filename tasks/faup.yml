@@ -60,7 +60,8 @@
   notify:
     - run ldconfig
 
-- block:
+- name: system python
+  block:
     - name: install faup python bindings
       ansible.builtin.command: "{{ faup_python_bin }} setup.py install"
       args:
@@ -68,7 +69,8 @@
         creates: "{{ faup_python_bindings }}"
   when: faup_virtualenv_path is not defined or not faup_virtualenv_path
 
-- block:
+- name: virtualenv python
+  block:
     - name: virtualenv dependencies
       ansible.builtin.package:
         name: "{{ faup_python_pkgs }}"
