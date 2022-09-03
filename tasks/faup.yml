@@ -5,13 +5,13 @@
     name: git
     state: present
 
-- name: git clone faup
+- name: Git clone faup
   ansible.builtin.git:
     repo: https://github.com/stricaud/faup.git
     dest: "{{ toolsetdir }}/faup"
     version: "{{ faup_version | default('685acb0d4c936f97782497a684764671728eda78') }}"
 
-- name: faup dependencies
+- name: Faup dependencies
   ansible.builtin.package: name={{ item }} state=present
   with_items: "{{ faup_deps }}"
   register: pkg_result
@@ -21,9 +21,9 @@
   ansible.builtin.package:
     name: libarchive
     state: latest
-  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 8)
+  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version | int == 8)
 
-- name: faup | compile
+- name: Compile faup
   ansible.builtin.command: "{{ item }}"
   args:
     chdir: "{{ toolsetdir }}/faup/build"
@@ -39,7 +39,7 @@
     create: yes
   when: ansible_distribution == 'Ubuntu'
   notify:
-    - run ldconfig
+    - Run ldconfig
 - name: RedHat | ensure appropriate path for shared libraries
   ansible.builtin.lineinfile:
     dest: /etc/ld.so.conf.d/x86_64-linux-gnu.conf
@@ -48,9 +48,9 @@
     create: yes
   when: ansible_os_family == "RedHat"
   notify:
-    - run ldconfig
+    - Run ldconfig
 
-- name: faup | install
+- name: Install faup
   ansible.builtin.command: "{{ item }}"
   args:
     chdir: "{{ toolsetdir }}/faup/build"
@@ -58,32 +58,32 @@
   with_items:
     - make install
   notify:
-    - run ldconfig
+    - Run ldconfig
 
-- name: system python
+- name: System python
   block:
-    - name: install faup python bindings
+    - name: Install faup python bindings
       ansible.builtin.command: "{{ faup_python_bin }} setup.py install"
       args:
         chdir: "{{ toolsetdir }}/faup/src/lib/bindings/python"
         creates: "{{ faup_python_bindings }}"
   when: faup_virtualenv_path is not defined or not faup_virtualenv_path
 
-- name: virtualenv python
+- name: Virtualenv python
   block:
-    - name: virtualenv dependencies
+    - name: Virtualenv dependencies
       ansible.builtin.package:
         name: "{{ faup_python_pkgs }}"
         state: present
       register: pkg_install
       until: pkg_install is success
     # if user exists with running process, usermod can't edit it and fails
-    - name: check if virtualenv user {{ faup_virtualenv_user }} exists
+    - name: Check if virtualenv user {{ faup_virtualenv_user }} exists
       ansible.builtin.command: "grep {{ faup_virtualenv_user }} /etc/passwd"
       changed_when: false
       ignore_errors: true
       register: haveuser
-    - name: ensure virtualenv user {{ faup_virtualenv_user }} exists
+    - name: Ensure virtualenv user {{ faup_virtualenv_user }} exists
       ansible.builtin.user:
         name: "{{ faup_virtualenv_user }}"
         home: "{{ faup_virtualenv_home }}"
@@ -98,21 +98,21 @@
     #   become_user: "{{ faup_virtualenv_user }}"
     #   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
     ## centos7: previous command fails silently
-    - name: ensure virtualenv dirname path exists
+    - name: Ensure virtualenv dirname path exists
       ansible.builtin.file:
         dest: "{{ faup_virtualenv_path | dirname }}"
         state: directory
         mode: '0755'
         owner: "{{ faup_virtualenv_user }}"
       when: faup_virtualenv_path | dirname | dirname != '/home'
-    - name: ensure directories ownership if needed, like pip cache
+    - name: Ensure directories ownership if needed, like pip cache
       ansible.builtin.file:
         dest: "{{ item.d }}"
         state: "{{ item.s }}"
         mode: "{{ item.m }}"
         owner: "{{ item.o }}"
       with_items: "{{ faup_ownership | default([]) }}"
-    - name: install faup python bindings - virtualenv
+    - name: Install faup python bindings - virtualenv
       ansible.builtin.command: "{{ item.c }}"
       args:
         creates: "{{ item.t }}"

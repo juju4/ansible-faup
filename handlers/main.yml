@@ -1,4 +1,4 @@
 ---
 
-- name: run ldconfig
+- name: Run ldconfig
   ansible.builtin.command: ldconfig
