@@ -12,7 +12,9 @@
     version: "{{ faup_version | default('685acb0d4c936f97782497a684764671728eda78') }}"
 
 - name: Faup dependencies
-  ansible.builtin.package: name={{ item }} state=present
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: "present"
   with_items: "{{ faup_deps }}"
   register: pkg_result
   until: pkg_result is success
@@ -61,15 +63,16 @@
     - Run ldconfig
 
 - name: System python
+  when: faup_virtualenv_path is not defined or not faup_virtualenv_path
   block:
     - name: Install faup python bindings
       ansible.builtin.command: "{{ faup_python_bin }} setup.py install"
       args:
         chdir: "{{ toolsetdir }}/faup/src/lib/bindings/python"
         creates: "{{ faup_python_bindings }}"
-  when: faup_virtualenv_path is not defined or not faup_virtualenv_path
 
 - name: Virtualenv python
+  when: faup_virtualenv_path is defined and faup_virtualenv_path
   block:
     - name: Virtualenv dependencies
       ansible.builtin.package:
@@ -78,12 +81,12 @@
       register: pkg_install
       until: pkg_install is success
     # if user exists with running process, usermod can't edit it and fails
-    - name: Check if virtualenv user {{ faup_virtualenv_user }} exists
+    - name: Check if virtualenv user exists - {{ faup_virtualenv_user }}
       ansible.builtin.command: "grep {{ faup_virtualenv_user }} /etc/passwd"
       changed_when: false
       ignore_errors: true
       register: haveuser
-    - name: Ensure virtualenv user {{ faup_virtualenv_user }} exists
+    - name: Ensure virtualenv user exists - {{ faup_virtualenv_user }}
       ansible.builtin.user:
         name: "{{ faup_virtualenv_user }}"
         home: "{{ faup_virtualenv_home }}"
@@ -134,4 +137,3 @@
       #   with_items:
       #     - "{{ faup_virtualenv_path }}/bin/python setup.py build"
       #     - "{{ faup_virtualenv_path }}/bin/python setup.py install"
-  when: faup_virtualenv_path is defined and faup_virtualenv_path
