@@ -2,6 +2,8 @@
 
 toolsetdir: /opt/tools
 
+faup_version: 'fecf768603e713bc903c56c8df0870fae14e3f93'
+
 ## if undefined/empty, global install, else in corresponding virtualenv
 # faup_virtualenv_path: /path/to/env
 # faup_virtualenv_user: user

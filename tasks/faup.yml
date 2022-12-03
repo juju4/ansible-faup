@@ -9,7 +9,7 @@
   ansible.builtin.git:
     repo: https://github.com/stricaud/faup.git
     dest: "{{ toolsetdir }}/faup"
-    version: "{{ faup_version | default('685acb0d4c936f97782497a684764671728eda78') }}"
+    version: "{{ faup_version }}"
   register: dl_result
   until: dl_result is success
 
