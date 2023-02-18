@@ -5,12 +5,12 @@ faup_deps:
   - make
   - gcc
   - gcc-c++
-  - python3.10-devel
+  - python3-devel
   - python3-setuptools
   - libarchive
 
-faup_python_bin: "python3.10"
-faup_python_bindings: "{% elif faup_virtualenv_path %}{{ faup_virtualenv_path }}/lib/python3.10/site-packages/pyfaup-1.2.dist-info{% else %}/usr/local/lib/python3.10/site-packages/pyfaup-1.2-py3.6.egg{% endif %}"
+faup_python_bin: "python3"
+faup_python_bindings: "{% elif faup_virtualenv_path %}{{ faup_virtualenv_path }}/lib/python3.9/site-packages/pyfaup-1.2.dist-info{% else %}/usr/local/lib/python3.9/site-packages/pyfaup-1.2-py3.6.egg{% endif %}"
 
 faup_python_pkgs:
   - python3-virtualenv
