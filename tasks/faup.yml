@@ -121,6 +121,9 @@
       ansible.builtin.command: "{{ item.c }}"
       args:
         creates: "{{ item.t }}"
+      # https://github.com/pypa/virtualenv/issues/2350
+      environment:
+        DEB_PYTHON_INSTALL_LAYOUT: 'deb'
       with_items:
         - { c: "virtualenv -p {{ faup_python_bin }} {{ faup_virtualenv_path }}", t: "{{ faup_virtualenv_path }}" }
         - { c: "{{ faup_virtualenv_path }}/bin/pip install file://{{ toolsetdir }}/faup/src/lib/bindings/python/",
@@ -128,9 +131,6 @@
         }
       become: yes
       become_user: "{{ faup_virtualenv_user }}"
-      # https://github.com/pypa/virtualenv/issues/2350
-      environment:
-        DEB_PYTHON_INSTALL_LAYOUT: 'deb'
       # when: ansible_os_family == "RedHat"
       ## FIXME! not idempotent
       # - name: ensure right permissions
