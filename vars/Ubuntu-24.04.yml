@@ -8,6 +8,7 @@ faup_deps:
   - git
   - python3-dev
   - python3-setuptools
+  - python3-pip
 
 faup_python_bin: "python3"
 faup_python_pip: "pip3"
@@ -16,5 +17,4 @@ faup_python_bindings: "{% if faup_virtualenv_path %}{{ faup_virtualenv_path }}/l
 faup_python_pkgs:
   - python3-virtualenv
   - python3-pip
-  - python3-dev
   - python3-dev

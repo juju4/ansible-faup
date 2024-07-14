@@ -14,4 +14,3 @@ faup_python_pkgs:
   - python-virtualenv
   - python-pip
   - python-dev
-  - python-dev

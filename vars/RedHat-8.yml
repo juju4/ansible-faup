@@ -7,6 +7,7 @@ faup_deps:
   - gcc-c++
   - python36-devel
   - python3-setuptools
+  - python3-pip
   - libarchive
 
 faup_python_bin: "{% if faup_python_version == 2 %}python2{% else %}python3.6{% endif %}"
