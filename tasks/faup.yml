@@ -67,6 +67,20 @@
 - name: System python
   when: faup_virtualenv_path is not defined or not faup_virtualenv_path
   block:
+    - name: Check if existing faup python bindings
+      ansible.builtin.command: "find /usr/local/lib/python*/dist-packages -iname 'pyfaup*'"
+      register: find
+      changed_when: false
+    - name: Find result
+      ansible.builtin.debug:
+        var: find
+    - name: Pip show
+      ansible.builtin.command: "{{ faup_python_pip | default('pip') }} show faup"
+      register: pipshow
+      changed_when: false
+    - name: Pip show result
+      ansible.builtin.debug:
+        var: pipshow
     - name: Install faup python bindings
       ansible.builtin.command: "{{ faup_python_pip | default('pip') }} install ."
       args:
