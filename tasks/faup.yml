@@ -71,6 +71,7 @@
       ansible.builtin.command: "find /usr/local/lib/python*/dist-packages -iname 'pyfaup*'"
       register: find
       changed_when: false
+      failed_when: false
     - name: Find result
       ansible.builtin.debug:
         var: find
@@ -78,6 +79,7 @@
       ansible.builtin.command: "{{ faup_python_pip | default('pip') }} show faup"
       register: pipshow
       changed_when: false
+      failed_when: false
     - name: Pip show result
       ansible.builtin.debug:
         var: pipshow
