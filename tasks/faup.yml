@@ -68,7 +68,7 @@
   when: faup_virtualenv_path is not defined or not faup_virtualenv_path
   block:
     - name: Install faup python bindings
-      ansible.builtin.command: "{{ faup_python_bin }} setup.py install"
+      ansible.builtin.command: "{{ faup_python_pip | default('pip') }} install ."
       args:
         chdir: "{{ toolsetdir }}/faup/src/lib/bindings/python"
         creates: "{{ faup_python_bindings }}"

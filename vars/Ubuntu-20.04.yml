@@ -10,6 +10,7 @@ faup_deps:
   - python3-setuptools
 
 faup_python_bin: "{% if faup_python_version == 2 %}python2{% else %}python3{% endif %}"
+faup_python_pip: "pip3"
 faup_python_bindings: "{% if faup_python_version == 2 %}/usr/local/lib/python2.7/dist-packages/pyfaup-1.2-py2.7.egg{% elif faup_virtualenv_path %}{{ faup_virtualenv_path }}/lib/python3.8/site-packages/pyfaup-1.2.dist-info{% else %}/usr/local/lib/python3.8/dist-packages/pyfaup-1.2-py3.8.egg{% endif %}"
 
 faup_python_pkgs:
