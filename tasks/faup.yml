@@ -65,7 +65,7 @@
     - Run ldconfig
 
 - name: System python
-  when: faup_virtualenv_path is not defined or not faup_virtualenv_path
+  when: faup_virtualenv_path is not defined or faup_virtualenv_path | length == 0
   block:
     - name: Check if existing faup python bindings
       ansible.builtin.command: "find /usr/lib/ /usr/local/lib/ -iname 'pyfaup*'"
@@ -98,7 +98,7 @@
         creates: "{{ faup_python_bindings }}"
 
 - name: Virtualenv python
-  when: faup_virtualenv_path is defined and faup_virtualenv_path
+  when: faup_virtualenv_path is defined and faup_virtualenv_path | length > 0
   block:
     - name: Virtualenv dependencies
       ansible.builtin.package:
