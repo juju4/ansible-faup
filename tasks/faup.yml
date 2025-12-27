@@ -25,7 +25,7 @@
   ansible.builtin.package:
     name: libarchive
     state: latest
-  when: (ansible_os_family == "RedHat" and ansible_distribution_major_version | int == 8)
+  when: (ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] | int == 8)
 
 - name: Compile faup
   ansible.builtin.command: "{{ item }}"
@@ -41,7 +41,7 @@
     line: '/usr/local/lib/x86_64-linux-gnu'
     mode: '0644'
     create: yes
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts['distribution'] == 'Ubuntu'
   notify:
     - Run ldconfig
 - name: RedHat | ensure appropriate path for shared libraries
@@ -50,7 +50,7 @@
     line: '/usr/local/lib64'
     mode: '0644'
     create: yes
-  when: ansible_os_family == "RedHat"
+  when: ansible_facts['os_family'] == "RedHat"
   notify:
     - Run ldconfig
 
@@ -89,8 +89,8 @@
         path: "/usr/lib/python{{ faup_python_version | default('3.12') }}/EXTERNALLY-MANAGED"
         state: absent
       when: >
-        (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int == 24) or
-        (ansible_distribution == 'Debian' and ansible_distribution_major_version|int == 12)
+        (ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version']|int == 24) or
+        (ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version']|int == 12)
     - name: Install faup python bindings
       ansible.builtin.command: "{{ faup_python_pip | default('pip') }} install ."
       args:
@@ -125,7 +125,7 @@
     ### FIXME! end with owner root
     #   become: yes
     #   become_user: "{{ faup_virtualenv_user }}"
-    #   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    #   when: ansible_facts['distribution'] == 'Debian' or ansible_facts['distribution'] == 'Ubuntu'
     ## centos7: previous command fails silently
     - name: Ensure virtualenv dirname path exists
       ansible.builtin.file:
@@ -155,7 +155,7 @@
         }
       become: yes
       become_user: "{{ faup_virtualenv_user }}"
-      # when: ansible_os_family == "RedHat"
+      # when: ansible_facts['os_family'] == "RedHat"
       ## FIXME! not idempotent
       # - name: ensure right permissions
       #   ansible.builtin.file: "dest={{ faup_virtualenv_path }} state=directory owner={{ faup_virtualenv_user }} recurse=yes"
