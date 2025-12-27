@@ -23,7 +23,7 @@
       ansible.builtin.command: /usr/local/bin/faup -f tld slashdot.org
       changed_when: false
       register: run2
-    - name: Validate execution
+    - name: Validate execution (2)
       ansible.builtin.assert:
         # that: "'org' in run2.stdout and run2.rc == 0"
         that: "run2.rc == 0"
