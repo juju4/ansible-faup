@@ -89,8 +89,8 @@
         path: "/usr/lib/python{{ faup_python_version | default('3.12') }}/EXTERNALLY-MANAGED"
         state: absent
       when: >
-        (ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version']|int == 24) or
-        (ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version']|int == 12)
+        (ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_major_version']|int >= 24) or
+        (ansible_facts['distribution'] == 'Debian' and ansible_facts['distribution_major_version']|int >= 12)
     - name: Install faup python bindings
       ansible.builtin.command: "{{ faup_python_pip | default('pip') }} install ."
       args:
