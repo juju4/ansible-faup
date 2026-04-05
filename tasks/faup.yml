@@ -68,7 +68,7 @@
   when: faup_virtualenv_path is not defined or faup_virtualenv_path | length == 0
   block:
     - name: Check if existing faup python bindings
-      ansible.builtin.command: "find /usr/lib/ /usr/local/lib/ -iname 'pyfaup*'"
+      ansible.builtin.command: "find /usr/lib/ /usr/local/lib/ /usr/lib64/ /usr/local/lib64/ -iname 'pyfaup*'"
       register: find
       changed_when: false
       failed_when: false
