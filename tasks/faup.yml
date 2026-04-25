@@ -33,7 +33,7 @@
     chdir: "{{ toolsetdir }}/faup/build"
     creates: "{{ toolsetdir }}/faup/build/src/tools/faup"
   with_items:
-    - cmake ..
+    - "cmake .. {{ faup_cmake_args | default('') }}"
     - make
 - name: Ubuntu | ensure appropriate path for shared libraries
   ansible.builtin.lineinfile:
