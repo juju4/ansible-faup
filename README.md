@@ -1,7 +1,7 @@
-[![Actions Status - Master](https://github.com/juju4/ansible-faup/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-faup/actions?query=branch%3Amaster)
-[![Actions Status - Devel](https://github.com/juju4/ansible-faup/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-faup/actions?query=branch%3Adevel)
-
 # FAUP ansible role
+
+[![Actions Status - Main](https://github.com/juju4/ansible-faup/workflows/AnsibleCI/badge.svg)](https://github.com/juju4/ansible-faup/actions?query=branch%3Amain)
+[![Actions Status - Devel](https://github.com/juju4/ansible-faup/workflows/AnsibleCI/badge.svg?branch=devel)](https://github.com/juju4/ansible-faup/actions?query=branch%3Adevel)
 
 Ansible role to setup Faup, Fast URL decoder library
 https://github.com/stricaud/faup
